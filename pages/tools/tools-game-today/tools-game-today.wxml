@@ -1,0 +1,298 @@
+<!--pages/tools/tools-game-today/tools-game-today.wxml-->
+<import src="tools-matchDate-template/tools-matchDate-template.wxml" />
+<import src="../../load-template/load-template.wxml" />
+<!--足球联赛  -->
+<view wx:if="{{matchId==0}}">
+  <view class="switchBar">
+    <view class="tab-item {{currentTab==0 ? 'on' : ''}}" data-currentTab="0" bindtap="switchTab">赛程</view>
+    <view class="tab-item {{currentTab==2 ? 'on' : ''}}" data-currentTab="2" bindtap="switchTab">积分</view>
+    <view class="tab-item {{currentTab==3 ? 'on' : ''}} " data-currentTab="3" bindtap="switchTab">射手</view>
+    <view class="tab-item {{currentTab==4 ? 'on' : ''}}" data-currentTab="4" bindtap="switchTab">红黄</view>
+  </view>
+  <view wx:if="{{currentTab==0}}">
+    <scroll-view class="scrollview" scroll-y="{{true}}" bindscrolltoupper="pulldownrefresh" style="height: 1140rpx">
+      <view class='match-top'>
+        <view class='follow'>
+          <image catchtap="followTap" class='fol-img' src="{{gamefollow[(matchId)] ? '/images/common/guanzhu.png': '/images/common/weiguanzhu.png'}}"></image>
+        </view>
+        <view class='tip'>
+          - 下拉加载往日赛事 -
+        </view>
+      </view>
+      <view style="height:1400rpx">
+        <block wx:for="{{todayGame}}" wx:for-item="game" wx:key="key">
+          <template is="matchDateTemplate" data="{{...game}}" />
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+  <!--积分榜  -->
+  <view wx:elif="{{currentTab==2}}" bindtouchmove="viewBindTouchMove">
+    <view class="matchIntegralview">
+      <view class="matchIntegral">
+        <view class="matchIntegralitem" style="width:65rpx;">排名</view>
+        <view class="matchIntegralitem" style="width:230rpx;">学院</view>
+        <view class="matchIntegralitem" style="width:65rpx;">轮次</view>
+        <view class="matchIntegralitem" style="width:150rpx;">胜/平/负</view>
+        <view class="matchIntegralitem" style="width:150rpx;">进/失/净</view>
+        <view class="matchIntegralitem" style="width:75rpx;">积分</view>
+      </view>
+      <view>
+        <scroll-view class="scrollview" scroll-y="{{true}}" style="height: 1080rpx">
+          <block wx:for="{{scorerankings}}" wx:for-item="item" wx:key="key">
+            <view class="matchIntegralteam">
+              <view class="matchInteralteamitem">
+                <view wx:if="{{item.ranking==1}}">
+                  <image class="jin" src="https://heikeonline.oss-cn-beijing.aliyuncs.com/hko_basic_icon/medal/jin.png" />
+                </view>
+                <view wx:elif="{{item.ranking==2}}">
+                  <image class="jin" src="https://heikeonline.oss-cn-beijing.aliyuncs.com/hko_basic_icon/medal/yin.png" />
+                </view>
+                <view wx:elif="{{item.ranking==3}}">
+                  <image class="jin" src="https://heikeonline.oss-cn-beijing.aliyuncs.com/hko_basic_icon/medal/tong.png" />
+                </view>
+                <view wx:else class="matchIntegralteamitem {{item.ranking>=1 && item.ranking <4 ? 'red':'yellow'}}" style="width:65rpx">{{item.ranking}}</view>
+              </view>
+
+              <view class="thismatchIntegralteamitem " style="width:225rpx;padding:10rpx;">
+                <image class="logo-image-small" src="{{item.team.log}}" /> {{item.team.name}}
+              </view>
+              <view class="matchIntegralteamitem" style="width:65rpx;">{{item.ord}}</view>
+              <view class="matchIntegralteamitem" style="width:150rpx;">{{item.win}}/{{item.draw}}/{{item.defeated}}</view>
+              <view class="matchIntegralteamitem" style="width:150rpx;">{{item.goal}}/{{item.lost}}/{{item.realgoal}}</view>
+              <view class="matchIntegralteamitem num-weight" style="width:75rpx;">{{item.score}}</view>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+  <!--射手榜  -->
+  <view wx:elif="{{currentTab==3}}">
+    <view class="matchshooterview">
+      <view class="matchshooter">
+        <view class="matchshooteritem" style="width:225rpx;">学院</view>
+        <view class="matchshooteritem" style="width:225rpx;">姓名</view>
+        <view class="matchshooteritem" style="width:100rpx;">号码</view>
+        <view class="matchshooteritem" style="width:100rpx;">进球数</view>
+        <view class="matchshooteritem" style="width:100rpx;">排名</view>
+      </view>
+      <view>
+        <scroll-view class="scrollview" scroll-y="{{true}}" style="height: 1080rpx">
+          <block wx:for="{{shooterrankings}}" wx:for-item="item" wx:key="key">
+            <view class="matchshooterteam">
+              <view class="matchshooterteamitem" style="width:225rpx;">
+                <image class="logo-image-small" src="{{item.team.log}}" /> {{item.team.name}}
+              </view>
+              <view class="matchshooterteamitem" style="width:225rpx;">{{item.member.name}}</view>
+              <view class="matchshooterteamitem" style="width:100rpx;">{{item.member.number}}</view>
+              <view class="matchshooterteamitem" style="width:100rpx;">{{item.goal}}</view>
+              <view class="matchshooterteamitem  {{item.ranking>=1 && item.ranking <4 ? 'red':'yellow'}}" style="width:50rpx;">{{item.ranking}}</view>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+  <!--红黄牌  -->
+  <view wx:elif="{{currentTab==4}}">
+    <view class="matchyellowcardview">
+      <view class="matchyellowcard">
+        <view class="matchyellowcarditem" style="width:200rpx;">学院</view>
+        <view class="matchyellowcarditem" style="width:225rpx;">姓名</view>
+        <view class="matchyellowcarditem" style="width:100rpx;">号码</view>
+        <view class="matchyellowcarditem" style="width:100rpx;">黄牌</view>
+        <view class="matchyellowcarditem" style="width:100rpx;">红牌</view>
+      </view>
+      <view>
+        <scroll-view class="scrollview" scroll-y="{{true}}" style="height: 1080rpx">
+          <block wx:for="{{redyellowrankings}}" wx:for-item="item" wx:key="key">
+            <view class="matchyellowcardteam">
+              <view class="matchyellowcardteamitem" style="width:225rpx;">
+                <image class="logo-image-small" src="{{item.team.log}}" /> {{item.team.name}}
+              </view>
+              <view class="matchyellowcardteamitem" style="width:220rpx;">{{item.member.name}}</view>
+              <view class="matchyellowcardteamitem" style="width:80rpx;">{{item.member.number}}</view>
+              <view class="matchyellowcardteamitem" style="width:120rpx;">{{item.yellowcount}}</view>
+              <view class="matchyellowcardteamitem" style="width:60rpx;">{{item.redcount}}</view>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+
+</view>
+
+<!--足球杯赛  -->
+<view wx:if="{{matchId==1}}">
+  <view class="switchBar">
+    <view class="tab-item {{currentTab==0 ? 'on' : ''}}" data-currentTab="0" bindtap="switchTab">赛程</view>
+    <view class="tab-item {{currentTab==1 ? 'on' : ''}}" data-currentTab="1" bindtap="switchTab">对战</view>
+    <view class="tab-item {{currentTab==3 ? 'on' : ''}} " data-currentTab="3" bindtap="switchTab">射手</view>
+    <view class="tab-item {{currentTab==4 ? 'on' : ''}}" data-currentTab="4" bindtap="switchTab">红黄</view>
+
+  </view>
+  <view wx:if="{{currentTab==0}}">
+    <scroll-view class="scrollview" scroll-y="{{true}}" bindscrolltoupper="pulldownrefresh" style="height: 1140rpx">
+      <view class='match-top'>
+        <view class='follow'>
+          <image catchtap="followTap" class='fol-img' src="{{gamefollow[(matchId)] ? '/images/common/guanzhu.png': '/images/common/weiguanzhu.png'}}"></image>
+        </view>
+        <view class='tip'>
+          - 下拉加载往日赛事 -
+        </view>
+      </view>
+      <block wx:for="{{todayGame}}" wx:for-item="game" wx:key="key">
+        <template is="matchDateTemplate" data="{{...game}}" />
+      </block>
+    </scroll-view>
+  </view>
+  <!-- 射手榜 -->
+  <view wx:elif="{{currentTab==3}}">
+    <view class="matchshooterview">
+      <view class="matchshooter">
+        <view class="matchshooteritem" style="width:225rpx;">学院</view>
+        <view class="matchshooteritem" style="width:225rpx;">姓名</view>
+        <view class="matchshooteritem" style="width:100rpx;">号码</view>
+        <view class="matchshooteritem" style="width:100rpx;">进球数</view>
+        <view class="matchshooteritem" style="width:100rpx;">排名</view>
+      </view>
+      <view>
+        <scroll-view class="scrollview" scroll-y="{{true}}" style="height: 1080rpx">
+          <block wx:for="{{shooterrankings}}" wx:for-item="item" wx:key="key">
+            <view class="matchshooterteam">
+              <view class="matchshooterteamitem" style="width:225rpx;">
+                <image class="logo-image-small" src="{{item.team.log}}" /> {{item.team.name}}
+              </view>
+              <view class="matchshooterteamitem" style="width:225rpx;">{{item.member.name}}</view>
+              <view class="matchshooterteamitem" style="width:100rpx;">{{item.member.number}}</view>
+              <view class="matchshooterteamitem" style="width:100rpx;">{{item.goal}}</view>
+              <view class="matchshooterteamitem  {{item.ranking>=1 && item.ranking <4 ? 'red':'yellow'}}" style="width:50rpx;">{{item.ranking+1}}</view>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+  <!--红黄牌  -->
+  <view wx:elif="{{currentTab==4}}">
+    <view class="matchyellowcardview">
+      <view class="matchyellowcard">
+        <view class="matchyellowcarditem" style="width:200rpx;">学院</view>
+        <view class="matchyellowcarditem" style="width:225rpx;">姓名</view>
+        <view class="matchyellowcarditem" style="width:100rpx;">号码</view>
+        <view class="matchyellowcarditem" style="width:100rpx;">黄牌</view>
+        <view class="matchyellowcarditem" style="width:100rpx;">红牌</view>
+      </view>
+      <view>
+        <scroll-view class="scrollview" scroll-y="{{true}}" style="height: 1080rpx">
+          <block wx:for="{{redyellowrankings}}" wx:for-item="item" wx:key="key">
+            <view class="matchyellowcardteam">
+              <view class="matchyellowcardteamitem" style="width:225rpx;">
+                <image class="logo-image-small" src="{{item.team.log}}" /> {{item.team.name}}
+              </view>
+              <view class="matchyellowcardteamitem" style="width:220rpx;">{{item.member.name}}</view>
+              <view class="matchyellowcardteamitem" style="width:80rpx;">{{item.member.number}}</view>
+              <view class="matchyellowcardteamitem" style="width:120rpx;">{{item.yellowcount}}</view>
+              <view class="matchyellowcardteamitem" style="width:60rpx;">{{item.redcount}}</view>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+  <!--小组赛/淘汰赛  -->
+  <view wx:elif="{{currentTab==1}}" bindtouchmove="viewBindTouchMove">
+
+    <scroll-view class="scrollview" scroll-y="{{true}}" style="height: 1140rpx">
+      <block wx:for="{{groupMatch}}" wx:for-item="groupitem" wx:key="key">
+        <view class="matchIntegralview  ">
+          <view class='a-grade'>{{groupitem.groupName}}</view>
+          <view class="matchIntegral border-top">
+            <view class="matchIntegralitem" style="width:65rpx;">排名</view>
+            <view class="matchIntegralitem" style="width:230rpx;">学院</view>
+            <view class="matchIntegralitem" style="width:150rpx;">胜/平/负</view>
+            <view class="matchIntegralitem" style="width:150rpx;">进/失/净</view>
+            <view class="matchIntegralitem" style="width:75rpx;">积分</view>
+          </view>
+          <view>
+
+            <block wx:for="{{groupitem.scoreRankings}}" wx:for-item="item" wx:key="key">
+              <view class="matchIntegralteam">
+                <view class="matchInteralteamitem">
+                  <view class="matchIntegralteamitem" style="width:65rpx">{{item.ranking}}</view>
+                </view>
+                <view class="thismatchIntegralteamitem " style="width:225rpx;">
+                  <image class="logo-image-small" src="{{item.team.log}}" /> {{item.team.name}}
+                </view>
+                <view class="matchIntegralteamitem" style="width:150rpx;">{{item.win}}/{{item.draw}}/{{item.defeated}}</view>
+                <view class="matchIntegralteamitem" style="width:150rpx;">{{item.goal}}/{{item.lost}}/{{item.realgoal}}</view>
+                <view class="matchIntegralteamitem num-weight" style="width:75rpx;">{{item.score}}</view>
+              </view>
+            </block>
+          </view>
+        </view>
+      </block>
+    </scroll-view>
+
+  </view>
+</view>
+
+<!-- 篮球杯赛/火神杯 -->
+<view wx:if="{{matchId==2}}">
+  <view class="switchBar">
+    <view class="baskettab-item {{currentTab==0 ? 'on' : ''}}" data-currentTab="0" bindtap="switchTab">赛程</view>
+    <view class="baskettab-item {{currentTab==1 ? 'on' : ''}}" data-currentTab="1" bindtap="switchTab">对战</view>
+
+  </view>
+  <view wx:if="{{currentTab==0}}">
+    <scroll-view class="scrollview" scroll-y="{{true}}" bindscrolltoupper="pulldownrefresh" style="height: 1140rpx">
+      <view class='match-top'>
+        <view class='follow'>
+          <image catchtap="followTap" class='fol-img' src="{{gamefollow[(matchId)] ? '/images/common/guanzhu.png': '/images/common/weiguanzhu.png'}}"></image>
+        </view>
+        <view class='tip'>
+          - 下拉加载往日赛事 -
+        </view>
+      </view>
+      <block wx:for="{{todayGame}}" wx:for-item="game" wx:key="key">
+        <template is="matchDateTemplate" data="{{...game}}" />
+      </block>
+    </scroll-view>
+  </view>
+  <!--小组赛/淘汰赛  -->
+  <view wx:elif="{{currentTab==1}}" bindtouchmove="viewBindTouchMove">
+
+    <scroll-view class="scrollview" scroll-y="{{true}}" style="height: 1140rpx">
+      <block wx:for="{{groupMatch}}" wx:for-item="groupitem" wx:key="key">
+        <view class="matchIntegralview  ">
+          <view class='a-grade'>{{groupitem.groupName}}</view>
+          <view class="matchIntegral border-top">
+            <view class="matchIntegralitem" style="width:65rpx;">排名</view>
+            <view class="matchIntegralitem" style="width:230rpx;">学院</view>
+            <view class="matchIntegralitem" style="width:150rpx;padding-left:10rpx;">胜</view>
+            <view class="matchIntegralitem" style="width:150rpx;">负</view>
+          </view>
+          <view>
+
+            <block wx:for="{{groupitem.scoreRankings}}" wx:for-item="item" wx:key="key">
+              <view class="matchIntegralteam">
+                <view class="matchInteralteamitem">
+                  <view class="matchIntegralteamitem" style="width:65rpx">{{item.ranking}}</view>
+                </view>
+                <view class="thismatchIntegralteamitem " style="width:225rpx;padding:10rpx 0 0 20rpx;">
+                  <image class="logo-image-small" src="{{item.team.log}}" />{{item.team.name}}
+                </view>
+                <view class="matchIntegralteamitem" style="width:150rpx;">{{item.win}}</view>
+                <view class="matchIntegralteamitem" style="width:150rpx;">{{item.defeated}}</view>
+              </view>
+            </block>
+          </view>
+        </view>
+      </block>
+    </scroll-view>
+
+  </view>
+</view>
+<template is="loadtemplate" data="{{loading}}" />

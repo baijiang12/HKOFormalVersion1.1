@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/news/news",
+    "pages/news/news-detail/news-detail",
+    "pages/about/about",
+    "pages/tools/tools",
+    "pages/tools/tools-game-today/tools-game-today",
+    "pages/tools/tools-game-today/tools-game-today-detail/tools-game-today-detail"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "黑科Online",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#000000",
+    "list": [
+      {
+        "pagePath": "pages/news/news",
+        "text": "资讯",
+        "iconPath": "images/tarbar/uninfo.png",
+        "selectedIconPath": "images/tarbar/info.png"
+      },
+      {
+        "pagePath": "pages/tools/tools",
+        "text": "赛事",
+        "iconPath": "images/tarbar/unfootball.png",
+        "selectedIconPath": "images/tarbar/football.png"
+      },
+      {
+        "pagePath": "pages/about/about",
+        "text": "反馈",
+        "iconPath": "images/tarbar/uncontact.png",
+        "selectedIconPath": "images/tarbar/contact.png"
+      }
+    ]
+  }
+}

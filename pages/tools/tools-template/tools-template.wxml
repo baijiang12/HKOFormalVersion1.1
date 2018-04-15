@@ -1,0 +1,13 @@
+<import src="tools-detail-template/tools-detail-template.wxml" />
+<template name="tools-template">
+  <view class="tools-template-container">
+    <form bindsubmit="formSubimt" report-submit="true">
+      <button form-type="submit" class="top-module" class="btn" >
+        <view class="top-module">
+          <template is="detail-template" data="{{...match}}" />
+        </view>
+      </button>
+    </form>
+
+  </view>
+</template>

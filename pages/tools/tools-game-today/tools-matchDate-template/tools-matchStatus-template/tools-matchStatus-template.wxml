@@ -1,0 +1,72 @@
+<import src="tools-matchVS-template/tools-matchVS-template.wxml" />
+<template name="matchStatus">
+
+  <view class="tools-game-today-container" catchtap="onGameDetailTap" data-gameid="{{id}}" data-teamidone="{{team1.id}}" data-teamidtwo="{{team2.id}}">
+
+    <view class="team-view">
+      <template is="matchVSTemplate" data="{{...team1}}" />
+    </view>
+    <view wx:if="{{status=='未开赛'}}">
+      <view class="text-middle-view">
+        <view class='match-list-status'>
+          <view class='match-name'>{{name}}</view>
+          <view class='match-status'>{{status}}</view>
+        </view>
+        <view class='match-info'>
+          <view class='vs'>
+            <!-- <image src="../../../../../images/common/vs.png"></image> -->
+            <text> vs</text>
+          </view>
+          <view>/</view>
+          <view>
+            <view class='match-area'>{{location}}</view>
+            <view class='match-date'>{{time_str}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:elif="{{status=='已结束'}}">
+      <view class="text-middle-view">
+        <view class='match-list-status'>
+          <view class='match-name'>{{name}}</view>
+          <view class='match-status-1'>{{status}}</view>
+        </view>
+        <view class='match-info'>
+          <view class='vs'>{{score1}}</view>
+          <view class='maohao'>：</view>
+          <view>
+            <view class='vs1'>{{score2}}</view>
+          </view>
+        </view>
+
+      </view>
+
+    </view>
+    <view wx:elif="{{status=='进行中'}}">
+      <view class="text-middle-view">
+        <view class='match-list-status'>
+          <view class='match-name'>{{name}}</view>
+          <view class='match-status-1'>{{status}}</view>
+        </view>
+        <view class='match-info'>
+          <view class='vs'>{{score1}}</view>
+          <view class='maohao'>：</view>
+          <view>
+            <view class='vs1'>{{score2}}</view>
+          </view>
+        </view>
+
+      </view>
+
+    </view>
+
+    <view class="team2-view">
+      <template is="matchVSTemplate" data="{{...team2}}" />
+    </view>
+
+  </view>
+
+</template>
+
+
+<!-- </template> -->

@@ -1,0 +1,5 @@
+.team-name {
+  font-size: 30rpx;
+  color: #4b556c;
+  font-weight: 700;
+}

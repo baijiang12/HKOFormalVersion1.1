@@ -1,0 +1,84 @@
+<view class='detail-container'>
+  <image class='head-image' src='{{newsDetails.headImage}}'></image>
+  <view class='author-date'>
+    <image class="avatar" src="{{newsDetails.author.icon}}"></image>
+    <text class="author">{{newsDetails.author.name}}</text>
+    <text class="const-text">发表于</text>
+    <text class="date">{{newsDetails.time}}</text>
+  </view>
+    <view class="horizon2"></view>
+  <text class="new-title">{{newsDetails.title}}</text>
+
+  <block wx:for='{{newsDetails.content_str}}' wx:for-item='item' wx:for-index='index' wx:key='dewaDetail'>
+
+    <view wx:if='{{status[index]}}'>
+      <view class='detail'>
+        <view>{{item}}</view>
+      </view>
+    </view>
+    <view wx:else >
+      <image class="detail-image" src='{{item}}' />
+    </view>
+  </block>
+
+  <view class='comment'>
+    <text class='commnd-list'>评论列表</text>
+    <view class='addcomments' wx:if='{{addcomments.user}}'>
+      <view class="horizon2"></view>
+      <view class='user-data'>
+        <image class="user-img" src="{{addcomments.user.icon}}"></image>
+        <text class="username">{{addcomments.user.name}}</text>
+        <text class="comment-date">{{mess}}</text>
+      </view>
+      <text class="comment-content">{{addcomments.content}}</text>
+      <view class='love'>
+        <image class='love-img' catchtap='zanTap' data-newsId="{{addcomments.newsId}}" data-commentId="{{addcomments.id}}" data-add="true" src="{{commentszan[(addcomments.newsId + '' + addcomments.id)] ? '/images/common/inzan.png'  : '/images/common/zan.png'}}"></image>
+        <text class='love-num'>{{addcomments.likecount}}</text>
+      </view>
+    </view>
+    <block wx:for='{{newsDetails.newsComments}}' wx:item-item='item' wx:index-index='{{index}}' wx:key='comment'>
+      <view class="horizon2"></view>
+      <view class='user-data'>
+        <image class="user-img" src="{{item.user.icon}}"></image>
+        <text class="username">{{item.user.name}}</text>
+        <text class="comment-date">{{item.time}}</text>
+      </view>
+      <text class="comment-content">{{item.content}}</text>
+      <view class='love'>
+        <image class='love-img' catchtap='zanTap' data-newsId="{{newsDetails.id ? newsDetails.id:''}}" data-commentId="{{item.id ? item.id: ''}}" src="{{commentszan[(newsDetails.id + '' + item.id)] ? '/images/common/inzan.png'  : '/images/common/zan.png'}}"></image>
+        <text class='love-num'>{{item.likecount}}</text>
+      </view>
+    </block>
+  </view>
+</view>
+<!-- 正确 -->
+<view class='write-comment'>
+  <view class='button'>
+    <button class='writeButton' bindtap="powerDrawer" data-statu="open">写一个评论···</button>
+  </view>
+  <view class='icon'>
+    <view class='sumLove'>
+    <image class='sumLove-img' wx:if='{{collected}}' data-collected='{{collected}}' catchtap='onCollectionTap' src='/images/common/inheart.png'></image>
+      <image class='sumLove-img' wx:else catchtap='onCollectionTap' src='/images/common/heart.png'></image>
+      <text class='sumLove-text'>{{newsDetails.likecount}}</text>
+    </view>
+    <view class='sunCom'>
+      <image class='sumCom-img' src='/images/common/comment.png'></image>
+      <text class='sumCom-text'>{{newsDetails.commentCount}}</text>
+    </view>
+  </view>
+</view>
+<view class="b1" wx:if="{{showModalStatus}}"></view>
+<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+  <!--drawer content-->
+  <view class="drawer_title">请留下你的评论</view>
+  <view class="drawer_content">
+    <form bindsubmit="bindFormSubmit" data-newsId='{{newsDetails.id}}'>
+      <textarea class='drawer_textarea'  maxlength='500' selection-start="1" auto-focus="{{true}}" show-confirm-bar="{{false}}" name="textarea" value='{{info}}'></textarea>
+      <view class='btn_sum'>
+        <button class='drawer_btn' bindtap="powerDrawer" data-statu="close"> 取消 </button>
+        <button class='drawer_btn' form-type="submit" bindtap="powerDrawer" data-statu="close"> 提交 </button>
+      </view>
+    </form>
+  </view>
+</view>

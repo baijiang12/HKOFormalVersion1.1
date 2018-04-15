@@ -1,0 +1,13 @@
+<import src="tools-matchStatus-template/tools-matchStatus-template.wxml" />
+<template name="matchDateTemplate">
+  <view>
+    <view class='day'>
+      <view class="horizon"></view>
+      <text class='date'>{{time}}</text>
+      <view class="horizon"></view>
+    </view>
+    <block wx:for="{{games}}" wx:for-item="thisgame" wx:key="key">
+      <template is="matchStatus" data="{{...thisgame}}" />
+    </block>
+  </view>
+</template>

@@ -1,0 +1,28 @@
+/* pages/tools/tools-game-today/tools-players-template/tools-players-template.wxss */
+.players-template-container{
+  display: flex;
+  flex-direction: row;
+  border: 1rpx 	#E0E0E0 solid;
+  width: 332rpx;
+  height: 183rpx;
+  padding-top: 30rpx;
+  padding-bottom: 10rpx;
+  border-radius: 7rpx;
+}
+.players-image image{
+  width: 210rpx;
+  height: 160rpx;
+  padding: 10rpx;
+  border-radius: 45rpx;
+}
+.plsyers-message{
+  display: flex;
+  flex-direction: column;
+  font-size: 28rpx;
+  color: #4b556c;
+  /* margin-left: 15rpx; */
+}
+
+.plsyers-info{
+  margin-bottom: 9rpx;
+}

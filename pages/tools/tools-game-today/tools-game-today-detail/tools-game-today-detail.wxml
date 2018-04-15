@@ -1,0 +1,147 @@
+<import src="../tools-players-template/tools-players-template.wxml" />
+<import src="../tools-matchDate-template/tools-matchStatus-template/tools-matchStatus-template.wxml" />
+<view class="tool-game-today-detail-container">
+  <!--设置评论滚动  -->
+  <!-- <scroll-view style="height:650px" scroll-x="false" scroll-y="true" lower-threshold="100" bindscrolltolower="onScrollLower"> -->
+    <template is="matchStatus" data="{{...thisGame}}" />
+
+    <view class='supportlv'>
+      <view class='sup-numL'>{{thisGame.team1likecounts}}%</view>
+      <view class='sup-numR'>{{thisGame.team2likecounts}}%</view>
+    </view>
+    <view class='support'>
+      <image class='supportL' data-teamid="support1" catchtap="gameSupport" src="{{Supported1?'/images/common/HsupportL.png':'/images/common/supportL.png'}}"></image>
+      <progress percent="{{thisGame.team1likecounts}}" stroke-width="3" activeColor="	#F75000" backgroundColor="#484891" />
+      <image class='supportR' data-teamid="support2" catchtap="gameSupport" src="{{Supported2?'/images/common/HsupportR.png':'/images/common/supportR.png'}}"></image>
+    </view>
+    <view class='judgemnt'>
+      <view class='jud-peo'>主裁判:{{thisGame.mainjudge}}</view>
+      <view class='jud-peo'>边裁判:{{thisGame.otherjudger1}}</view>
+      <view class='jud-peo'>边裁判:{{thisGame.otherjudger2}}</view>
+    </view>
+    <view class="game-detail-bottom">
+      <view class="detail-bottom-top">
+        <view class="detail-bottom-top-left" data-lor="left" catchtap="switchTabs">
+          <text>球员介绍</text>
+          <view class="{{theTab == 'left'? 'selected':'noselected'}}"></view>
+        </view>
+        <view class="detail-bottom-top-right" data-lor="right" catchtap="switchTabs">
+          <text>比赛数据</text>
+          <view class="{{theTab == 'right'? 'selected':'noselected'}}"></view>
+        </view>
+      </view>
+      <view wx:if="{{theTab == 'left'}}" class="detail-bottom-bottom">
+      <view style="font-size:15px;margin-left:25rpx;color:#fff;background-color:#336699;width:22%;text-align:center;">{{thisGame.team1.name}}</view>
+        <view class="detail-team1">
+          <scroll-view class="scroll-view_H" scroll-x style="width: 100%">
+            <block wx:for="{{thisGame.team1.members}}" wx:key="key" wx:for-item="eachPlayer">
+              <view class="scroll-view-item_H">
+                <template is="players-template" data="{{...eachPlayer}}" />
+              </view>
+            </block>
+          </scroll-view>
+        </view>
+        <view style="font-size:15px;margin-left:25rpx;color:#fff;background-color:#336699;width:22%;text-align:center;">{{thisGame.team2.name}}</view>
+        <view class="detail-team1">
+          <scroll-view class="scroll-view_H" scroll-x style="width: 100%">
+            <block wx:for="{{thisGame.team2.members}}" wx:key="key" wx:for-item="eachPlayer">
+              <view class="scroll-view-item_H">
+                <template is="players-template" data="{{...eachPlayer}}" />
+              </view>
+            </block>
+          </scroll-view>
+        </view>
+
+
+        <view class='comment'>
+          <text class='commnd-list'>评论列表</text>
+          <!-- <block wx:for="addcomments" wx:for-item="addCommentItem"> -->
+            <view class="addcomments" wx:if="{{addcomments.user}}">
+              <view class="horizon2"></view>
+              <view class='user-data'>
+                <image class="user-img" src="{{addcomments.user.icon}}"></image>
+                <text class="username">{{addcomments.user.name}}</text>
+                <text class="comment-date">{{addcomments.time}}</text>
+              </view>
+              <text class="comment-content">{{addcomments.content}}</text>
+              <view class='love'>
+                <image catchtap="commentSupport" data-commentId="{{addcomments.id}}" data-add="true" data-gameId="{{addcomments.gameId}}"  class='love-img' src="{{commentssupport[(addcomments.gameId+''+addcomments.id)] ?'/images/common/inzan.png'  : '/images/common/zan.png'}}"></image>
+                <text class='love-num'>{{addcomments.likecount}}</text>
+              </view>
+            </view>
+          <!-- </block> -->
+
+          <block wx:for="{{thisGame.comments}}" wx:key="key" wx:for-item="thisComment">
+            <view class="horizon2"></view>
+            <view class='user-data'>
+              <image class="user-img" src="{{thisComment.user.icon}}"></image>
+              <text class="username">{{thisComment.user.name}}</text>
+              <text class="comment-date">{{thisComment.time}}</text>
+            </view>
+            <text class="comment-content">{{thisComment.content}}</text>
+            <view class='love'>
+              <image catchtap="commentSupport" data-commentId="{{thisComment.id}}" data-gameId="{{thisComment.gameId}}" class='love-img' src="{{commentssupport[(thisComment.gameId+''+thisComment.id)] ?'/images/common/inzan.png'  : '/images/common/zan.png'}}"></image>
+              <text class='love-num'>{{thisComment.likecount}}</text>
+            </view>
+          </block>
+
+        </view>
+
+
+        <view class='write-comment'>
+          <view class='button'>
+            <button class='writeButton' bindtap="powerDrawer" data-statu="open">写一个评论..</button>
+          </view>
+          <view class='icon'>
+            <!-- <view class='sumLove'>
+              <image class='sumLove-img' src='/images/common/heart.png'></image>
+              <text class='sumLove-text'>407</text>
+            </view> -->
+            <view class='sunCom'>
+              <image class='sumCom-img' src='/images/common/comment.png'></image>
+              <text class='sumCom-text'>{{commentnum}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="b1" wx:if="{{showModalStatus}}"></view>
+        <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+
+          <!--drawer content-->
+          <view class="drawer_title">请留下你的评论</view>
+          <view class="drawer_content">
+            <form bindsubmit="bindFormSubmit">
+              <textarea class='drawer_textarea' selection-start="1" maxlength='1000' auto-focus="{{true}}" show-confirm-bar="{{false}}" name="textarea" value='{{info}}'></textarea>
+              <view class='btn_sum'>
+                <button class='drawer_btn' bindtap="powerDrawer" data-statu="close"> 取消 </button>
+                <button class='drawer_btn' form-type="submit" bindtap="powerDrawer" data-statu="close"> 提交 </button>
+              </view>
+            </form>
+          </view>
+        </view>
+      </view>
+
+
+      <view wx:else="">
+        <view wx:if="{{isnotpointInfos}}" class='data'>
+          暂无数据
+        </view>
+        <view wx:else="" class='match-datas'>
+          <block wx:for="{{thisGame.pointInfos}}" wx:key="key" wx:for-item="pointInfo">
+            <view class='match-data'>
+              <view class='match-data-css'>{{pointInfo.happentime}}'</view>
+              <view class='match-data-css'>{{pointInfo.member.name}}</view>
+              <view class='match-data-img'>{{pointInfo.event}}</view>
+              <view class='match-data-css'>{{pointInfo.currentscore}}</view>              
+              <!-- <view wx:if="{{pointInfo.eventKind == ChANGE}}" class='match-data-img'><image src="/images/score/score.png"></image></view>
+              <view wx:elif="{{pointInfo.eventKind == SCORE}}" class='match-data-img'><image src="/images/score/score.png"></image></view>
+              <view wx:else class='match-data-img'><image src="/images/score/score.png"></image></view> -->
+            </view>
+          </block>
+        </view>
+
+      </view>
+
+    </view>
+
+  <!-- </scroll-view> -->
+</view>

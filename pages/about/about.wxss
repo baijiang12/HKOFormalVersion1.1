@@ -1,0 +1,54 @@
+.about-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.desc-title {
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+  color: #828282;
+}
+
+.desc-textarea {
+  width: 93%;
+  padding-top: 4px;
+  padding-left: 4rpx;
+  height: 234rpx;
+  border: 2rpx solid #ccc;
+  margin-top:  30rpx;
+  margin-left: 25rpx;
+  border-radius: 8px;
+  color: #4b556c;
+  font-weight: 300;
+  font-size: 35rpx;
+  text-align: left;
+  letter-spacing: 3px;
+  justify-content: center;
+}
+
+.sub {
+  width: 450rpx;
+  border-radius: 8px;
+  margin-top: 40rpx;
+  margin-left: 150rpx;
+}
+.sub-color{
+    color: #828282;
+}
+.contact {
+  margin-top: 400rpx;
+}
+
+.tel {
+  margin-top: 55rpx;
+  margin-left: 160rpx;
+  color: #b8b8b8;
+  font-size: 30rpx;
+}
+
+.about-us {
+  color: #b8b8b8;
+  font-size: 32rpx;
+  margin-top: 10rpx;
+  margin-left: 160rpx;
+}

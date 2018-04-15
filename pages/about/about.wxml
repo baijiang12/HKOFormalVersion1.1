@@ -1,0 +1,19 @@
+<view class='about-container'>
+  <view class='desc-title'>
+    问题描述
+  </view>
+  <form bindsubmit='formSubmit'>
+  <view class='descs'>
+    <textarea class='desc-textarea' name='textarea' placeholder="请描述你遇到的问题或提供宝贵的建议" placeholder-style="color:#ccc;font-size:30rpx;" value='{{info}}'/>
+  </view> 
+  <view class='sub'>
+    <button class='sub-color' form-type='submit'>提交</button>
+  </view>
+  </form>
+  <view class='contact'>
+    <view class='tel'>Tel: 13199262669 18145146697</view>
+  </view>
+  <view class='about-us'>
+    <view class='copyright'>copyright@YOU软件开发工作室</view>
+  </view>
+</view>

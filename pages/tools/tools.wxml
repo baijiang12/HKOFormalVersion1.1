@@ -1,0 +1,47 @@
+<!--pages/tools/tools.wxml-->
+<import src="tools-template/tools-template.wxml" />
+<import src="../load-template/load-template.wxml" />
+<view class="tools-container">
+  <view>
+    <view class="gameing">
+      <text>足球</text>
+    </view>
+
+    <block wx:for="{{matchList.match_list}}" wx:for-item="match" wx:key="key">
+      <view wx:if="{{match.variety==1}}" class="match-single">
+        <template is="tools-template" data="{{match}}" />
+      </view>
+    </block>
+
+  </view>
+
+  <view class="middle-ribbon"></view>
+
+  <view>
+    <view class="gameing">
+      <text>火神杯</text>
+    </view>
+
+    <block wx:for="{{matchList.match_list}}" wx:for-item="match" wx:key="key">
+      <view wx:if="{{match.variety==2}}" class="match-single">
+        <template is="tools-template" data="{{match}}" />
+      </view>
+    </block>
+
+  </view>
+
+  <view class="middle-ribbon"></view>
+
+  <view class="notgame">
+    <view class="gameing">
+      <text>其他</text>
+    </view>
+    <block wx:for="{{matchList.match_list}}" wx:for-item="match" wx:key="key">
+      <view wx:if="{{match.variety==3}}" class="match-single" >
+        <template is="tools-template" data="{{match}}" />
+      </view>
+    </block>
+  </view>
+
+</view>
+<template is="loadtemplate" data="{{loading}}"/>

@@ -1,0 +1,7 @@
+<template name="loadtemplate">
+  <view class="loading-container">
+    <!-- <view wx:if="{{loading}}"class="loading"></view>   -->
+    <view class="loading" wx:if="{{loading}}"></view>
+    <!-- <view class="loading"></view> -->
+  </view>
+</template>

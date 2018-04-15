@@ -1,0 +1,79 @@
+<view class="news-container">
+  <view class="topBar">
+    <text class="recommend">今日推荐</text>
+    <view class='day-info'>{{city}} {{weatherData}} {{day}}</view>
+  </view>
+  <view class="carousel">
+    <swiper style='border-radius:100rpx' indicator-dots="true" autoplay="true" interval='5000' indicator-active-color='#fff'>
+      <block wx:for='{{newsSwiper}}' wx:for-item='items' wx:for-index='id' wx:key='newsTop'>
+        <swiper-item catchtap='onNewsDetail' data-newsId='{{items.id}}'>
+          <image src="{{items.headImage}}" mode="aspectFill"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <view class="column">
+    <view class="colum_1" catchtap='onMatch' data-sportid="{{0}}">
+      <form bindsubmit="formSubimt" report-submit="true">
+        <button form-type="submit" class="top-module" class="btn">
+          <image class="image_shadow" src="https://heikeonline.oss-cn-beijing.aliyuncs.com/hko_basic_icon/icon/20.png"></image>
+        </button>
+      </form>
+    </view>
+    <view class="colum_1">
+      <image catchtap='onMatch' data-sportid="{{2}}" class="image_shadow" src="https://heikeonline.oss-cn-beijing.aliyuncs.com/hko_basic_icon/icon/10.png"></image>
+    </view>
+    <view class="colum_2" catchtap="signIn">
+      <image class="colum_image image_shadow" src="https://heikeonline.oss-cn-beijing.aliyuncs.com/hko_basic_icon/icon/3.png"></image>
+    </view>
+  </view>
+  <block wx:for='{{newsTop}}' wx:for-item='items' wx:for-index='id' wx:key='newsTop'>
+    <view class="colume-mee" catchtap='onNewsDetail' data-newsId='{{items.id}}'>
+      <view class="text-box">
+        <text class="comment">{{items.kindof}}</text>
+        <view class="colum_container">
+          <view class="text_ha">
+            <text>{{items.title}}</text>
+            <view class="text-view">
+              <text class="text_small">{{items.time}}</text>
+              <image src="https://heikeonline.oss-cn-beijing.aliyuncs.com/hko_basic_icon/icon/16.png" />
+              <text class="text-mm">{{items.likecount}}</text>
+              <image src="https://heikeonline.oss-cn-beijing.aliyuncs.com/hko_basic_icon/icon/17.png" />
+              <text>{{items.commentCount}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <image class="image-size" src="{{items.headImage}}"></image>
+    </view>
+  </block>
+  <block wx:for='{{newsArr}}' wx:for-item='item' wx:for-index='ids' wx:key='news'>
+    <view class="container-comment" catchtap="onNewsDetail" data-newsId='{{item.id}}'>
+      <view class="comment-mc">
+        <view class="title">
+          <text>- {{item.kindof}} -</text>
+        </view>
+        <text class="text_middle">{{item.title}}</text>
+        <view class='news-detail-from-data'>
+          <text class="text-pragraph-left">来自：{{item.author.name}}</text>
+          <text class="text-pragraph-right">{{item.time}}</text>
+        </view>
+        <view class="image-radius">
+          <image class="image-bottom" src="{{item.headImage}}" mode="aspectFill"> </image>
+        </view>
+      </view>
+    </view>
+  </block>
+  <view class='news-bottom'>
+    <text class='tip' hidden='{{hidden}}'>{{title}}</text>
+  </view>
+</view>
+<view class="mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="modal" wx:if="{{showModal}}" catchtouchmove="true">
+  <view class="modal-content">
+    <text class="modal-title">您是黑科大今天第{{signIn.number}}位打卡的</text>
+    <image src="{{signIn.image.url}}" class="gifImage"></image>
+    <text class="modal-text">{{signIn.text.content}}</text>
+  </view>
+  <button bindtap="go">我知道了</button>
+</view>

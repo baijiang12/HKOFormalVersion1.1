@@ -1,0 +1,27 @@
+@import "tools-detail-template/tools-detail-template.wxss";
+.tools-template-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  margin: 0 0 20rpx 0;
+}
+.top-module{
+  display: flex;
+  flex-direction: row;
+}
+.bottom-module{
+   /* border: 1px solid;  */
+   width: 750rpx;
+  height: 25rpx;
+  background: #eeeeee;
+}
+.btn{
+  border: none;
+  text-align: left;
+  border-style: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1.5;
+  background-color: #FFFFFF;
+  display: inline;
+}

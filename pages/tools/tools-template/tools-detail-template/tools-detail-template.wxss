@@ -1,0 +1,19 @@
+ .detail-template-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  margin:35rpx 75rpx 0 75rpx;  
+  width: 100rpx;
+} 
+.detail-image{
+  width: 100rpx;
+  height: 100rpx;
+}
+.detail-text{
+  font-size: 30rpx;
+  color: #000;
+}
+.detail-text text{
+  font-weight:650;
+  color: #000;
+}

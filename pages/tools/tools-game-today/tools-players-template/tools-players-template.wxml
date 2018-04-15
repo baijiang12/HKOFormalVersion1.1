@@ -1,0 +1,11 @@
+<template name="players-template">
+<view class="players-template-container">
+  <view class="players-image"><image src="{{icon}}"></image></view>
+  <view class="plsyers-message">
+    <text class='plsyers-info'>姓名:</text>
+    <text class='plsyers-info'>{{name}}</text>
+    <text class='plsyers-info'>位置:</text>
+    <text>{{position}}</text>
+  </view>
+</view>
+</template>

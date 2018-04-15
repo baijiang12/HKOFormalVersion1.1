@@ -1,0 +1,33 @@
+/* pages/tools/tools.wxss */
+@import "tools-template/tools-template.wxss";
+@import "../load-template/load-template.wxss";
+.tools-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.middle-ribbon{
+     /* border: 1px solid;  */
+   width: 750rpx;
+  height: 20rpx;
+  background: #f2f2f2;
+}
+.gameing{
+  text-align: center;
+  margin-top: 35rpx;
+}
+.gameing text{
+  color: #ADADAD;
+}
+.notgame{
+  text-align: center;
+  margin-top: 35rpx;
+}
+/* .matchlist{
+  display: flex;
+  flex-direction: row;
+} */
+.match-single{
+  float: left;
+}
+

@@ -1,0 +1,24 @@
+ @import "tools-matchStatus-template/tools-matchStatus-template.wxss"; 
+.day {
+  /* background-color: #f2f2f2; */
+  display: flex;
+  flex-direction: row;
+}
+
+.horizon {
+  width: 40%;
+  height: 1px;
+  background-color: #e5e5e5;
+  vertical-align: middle;
+  position: relative;
+  top: 22rpx;
+  margin: 0 auto;
+  z-index: -99;
+}
+
+
+.date {
+  font-size: 33rpx;
+  font-weight: 700;
+  color: #4b556c;
+}
